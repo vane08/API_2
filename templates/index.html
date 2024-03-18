@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algoritmo Genético</title>
+    <!-- Enlace a Bootstrap CSS desde CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="container mt-5">
+    <h1 class="mb-4">Algoritmo Genético</h1>
+    
+    <form id="geneticoForm">
+        <div class="form-group">
+            <label for="max_iter">Número máximo de iteraciones:</label>
+            <input type="text" class="form-control" id="max_iter" name="max_iter" required>
+        </div>
+
+        <div class="form-group">
+            <label for="max_poblacion">Tamaño máximo de la población:</label>
+            <input type="text" class="form-control" id="max_poblacion" name="max_poblacion" required>
+        </div>
+
+        <div class="form-group">
+            <label for="num_vars">Número de variables:</label>
+            <input type="text" class="form-control" id="num_vars" name="num_vars" required>
+        </div>
+
+        <button type="button" class="btn btn-success" onclick="ejecutarAlgoritmo()">Ejecutar Algoritmo</button>
+    </form>
+
+    <h2 class="mt-5">Resultado:</h2>
+    <div id="resultado"></div>
+
+    <!-- Enlaces a los scripts de Bootstrap y Popper desde CDN -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function ejecutarAlgoritmo() {
+            var form = document.getElementById("geneticoForm");
+            var formData = new FormData(form);
+
+            fetch('/algoritmo_genetico', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("resultado").innerHTML = "<p>Mejor gen encontrado: " + data.mejor_gen + "</p>" +
+                                                                  "<p>Función de adaptación: " + data.funcion_adaptacion + "</p>";
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html
